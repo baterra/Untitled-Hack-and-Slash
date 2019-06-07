@@ -1,5 +1,4 @@
 sceneSetups:
-- path: C:/Users/Kenny/Desktop/Other repos/Michael/MichaelWolfGames_Project/Assets/MichaelWolfGames/_DEMOS/Scenes/Demo
-    1 - Basic Damage.unity
+- path: Assets/Scenes/GunChron.unity
   isLoaded: 1
   isActive: 1
