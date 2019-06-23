@@ -26,21 +26,23 @@ public static class Damage
             damageValue = _dmg;
             type = _type;
         }
+
+        
     }
 
     public enum DamageType
     {
-        Physical,
-        Air,
-        Water,
-        Cold,
-        Fire,
-        Thunder,
-        Dark,
-        Holy,
-        Ether,
-        NonElement,
-        Stag,
-        MagicDrain
+        Physical, // 0
+        Air, // 1
+        Water, // 2
+        Cold, // 3
+        Fire, // 4
+        Thunder, // 5
+        Dark, // 6
+        Holy, // 7
+        Ether, // 8
+        NonElement, // 9
+        Stag, // 10
+        MagicDrain // 11
     }
 }
