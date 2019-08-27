@@ -153,74 +153,13 @@ public class TestEntity : Entity {
 
     }
 
+
+
+
     override
     public void AttackTarget(Entity target)
     {
-        //target.ApplyDamage(this, new Damage.DamageEventInfo(100f, Damage.DamageType.Water));
-        switch (myStateController.GetStateClipName())
-        {
-            case "test_QSpell_":
-                
-                target.ApplyDamage( new Damage.DamageEventInfo(500f, Damage.DamageType.Water));
-                target.applyKnockBack(6, 0, this);
-                target.applyHitstun();
-                break;
-            case "E":
-                break;
-            case "R":
-                break;
-            case "test_Attack1_":
-                target.ApplyStagDamage(80f);
-                target.ApplyMagicDrain(50f);
-
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Holy));
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Physical));
-                
-                target.applyKnockBack(3, 0, this);
-                target.applyHitstun();
-                break;
-
-            case "test_Attack2_":
-                target.ApplyStagDamage(80f);
-                target.ApplyMagicDrain(50f);
-
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Holy));
-                target.ApplyDamage( new Damage.DamageEventInfo(100f, Damage.DamageType.Physical));
-                target.applyKnockBack(3, 0, this);
-                target.applyHitstun();
-                break;
-
-            case "test_Parry_":
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Holy));
-                target.ApplyDamage( new Damage.DamageEventInfo(30f, Damage.DamageType.Physical));
-                target.applyKnockBack(3, 0, this);
-                target.applyHitstun();
-                break;
-            case "test_RunAttack_":
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Holy));
-                target.ApplyDamage( new Damage.DamageEventInfo(30f, Damage.DamageType.Physical));
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Fire));
-                target.applyKnockBack(3, 0, this);
-                target.applyHitstun();
-                break;
-            case "test_JumpAttack_":
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Holy));
-                target.ApplyDamage( new Damage.DamageEventInfo(50f, Damage.DamageType.Physical));
-                target.applyKnockBack(3, 0, this);
-                target.applyHitstun();
-                break;
-            default:
-              
-                break;
-
-        }
-    }
-
-
-
-   // public void AttackTarget(Entity target, )
-   // {
       
-   // }
+    }
 
 }

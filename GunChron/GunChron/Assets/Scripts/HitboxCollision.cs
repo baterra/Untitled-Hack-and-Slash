@@ -15,9 +15,9 @@ public class HitboxCollision : MonoBehaviour {
     { 
          if (collision.attachedRigidbody.GetComponent<Entity>() != null )
               collision.attachedRigidbody.GetComponent<Entity>().AttackTarget(thisEntity); // apply damage to the collided enemy
-                                                                                    // with values from thisEntity
+                                                                                           // with values from thisEntity
 
-           // Debug.Log("Cooll");//
+        //Debug.Log("atk 2");
     }
 
 
