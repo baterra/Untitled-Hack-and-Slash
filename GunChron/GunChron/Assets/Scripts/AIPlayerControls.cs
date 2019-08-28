@@ -25,13 +25,17 @@ public class AIPlayerControls : MonoBehaviour {
         if (entityPrefab.GetComponent<Entity>() != null)
         {
 
-           
+            if (TargetState == null) // if this AI has no target    // !!!!!!!!  EDIT THIS CONDITION TO INCLUDE DEATH STATE !!!!!!!!!!!
+            {
+                setIdle(); // it does nothing (IDLE STATE)
+            }
+            else
+            {
+
+            }
 
         }
-        else
-        {
-            Debug.Log("CHHUNG MUNG MAO!");//
-        }
+      
 
 
 
@@ -43,271 +47,62 @@ public class AIPlayerControls : MonoBehaviour {
         entityPrefab = pb;
     }
 
+    private void setIdle()
+    {
+        switch (myStateController.GetStateName())
+        {
+            case "Idle":
+                myStateController.setToIdle();
+                break;
+
+            case "Run":
+                myStateController.setToIdle();
+                break;
+
+            case "JumpRun":
+                myStateController.setToJumpIdle();
+                break;
+
+            case "JumpIdle":
+                myStateController.setToJumpIdle();
+                break;
+
+            case "Guard":
+                myStateController.setToIdle();
+                break;
+
+
+
+            default: // Do not try to change states for States histun, attack, and crumple states
+                        // since those states can transition on their own without the need for this script
+      
+                break;
+
+
+        }
+    }
+
 
     private void calculateNextMove() {
         if (TargetState != null)
         {
 
 
-
-        }
-    }
-
-    public void checkADKey(float n) // n is the direction the npc will heads towards, a positive number for right and a negative number for left
-    {
-
-
-        
-
-            switch (myStateController.GetStateName())   // this switch sets state to run if its Idle on the ground,
-                                                         // or jump run when its idle in the air
-            {
-                case "Idle":
-                    myStateController.setToRun();
-                    break;
-
-                case "JumpIdle":
-                    myStateController.setToJumpRun();
-                    break;
-
-                default:
-                    break;
-            }
-            //entityPrefab.GetComponent<StateController>().setToRun();
-
-
-            if (myStateController.state.getName().Equals("Run")         /// if player is in running state, move the player
-                || myStateController.state.getName().Equals("JumpRun"))
-            {
-                applyRun(n);
-
-            }
-            else if (myStateController.state.getName().Equals("Guard")) /// if player is in guarding state, change the direction the player is facing
-             {
-                applyRunWhenGuard(n);
-            }
-
-        
-
-
-    }
-
-
-
-    private void applyRun(float n)
-    {
-
-        if (n < 0)
-        {
-            myStateController.isRight = false;
-            entityPrefab.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
-        }
-        else if (n > 0)
-        {
-            myStateController.isRight = true;
-            entityPrefab.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
-        }
-
-        Vector3 newPos = entityPrefab.GetComponent<Transform>().position;
-        newPos += new Vector3(entityPrefab.GetComponent<Entity>().speed * Time.deltaTime
-            * n, 0, 0);///
-        entityPrefab.GetComponent<Transform>().position = newPos;
-    }
-
-
-
-
-
-    private void applyRunWhenGuard(float n)
-    {
-
-        if (n < 0)
-        {
-            myStateController.isRight = false;
-            entityPrefab.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
-        }
-        else if (n > 0)
-        {
-            myStateController.isRight = true;
-            entityPrefab.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
         }
     }
 
 
-
-
-
-
-
-    public void checkKeyARelease()
+    private bool isFacingAI()
     {
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            switch (myStateController.GetStateName())
-            {
-
-
-
-                case "Run":
-                    myStateController.setToIdle();
-                    break;
-
-                case "JumpRun":
-                    myStateController.setToJumpIdle();
-                    break;
-
-
-                default:
-                    break;
-
-
-            }
-
-        }
+        return false;
     }
 
-
-
-    public void checkKeyDRelease()
+    private bool checkInRange()
     {
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            switch (myStateController.GetStateName())
-            {
-
-
-
-                case "Run":
-                    myStateController.setToIdle();
-                    break;
-
-                case "JumpRun":
-                    myStateController.setToJumpIdle();
-                    break;
-
-
-                default:
-                    break;
-
-
-            }
-        }
+        return false;
     }
 
-
-
-    public void checkKeyS()
-    {
-        if (Input.GetKey(KeyCode.S))
-        {
-            myStateController.setToGuard();
-
-        }
-    }
-
-    public void checkKeySRelease()
-    {
-        if (Input.GetKeyUp(KeyCode.S) && myStateController.state.getName().Equals("Guard"))
-        {
-            myStateController.setToIdle();
-        }
-
-        //entityPrefab.GetComponent<Transform>().
-    }
-
-
-    public void checkKeyW()
-    {
-        if (Input.GetKey(KeyCode.W)
-
-            && (myStateController.state.getName().Equals("Run") ||
-                myStateController.state.getName().Equals("Idle")
-                || myStateController.state.getName().Equals("Hitstun"))
-                )
-        {
-            myStateController.atkPhase = "S";
-            entityPrefab.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 12);
-            // entityPrefab.GetComponent<StateController>().isGround = false;
-
-
-        }
-    }
-
-
-    public void checkLeftClick()
-    {
-        
-
-    }
-
-    public void checkLeftClickRelease()
-    {
-      
-
-        //entityPrefab.GetComponent<Transform>().
-    }
-
-
-    /// <summary>
-    /// DONT FORGET TO PUT THESE FUNCTIONS INTO UPDATE() FUNCTION
-    /// </summary>
-    /// 
-
-
-    public void checkRightClick()
-    {
-        if (Input.GetKey(KeyCode.Mouse1))
-        {
-            myStateController.setToSpellcasting();
-
-
-        }
-    }
-
-    public void checkRightClickRelease()
-    {
-        if (Input.GetKeyUp(KeyCode.Mouse1) && myStateController.state.getName().Equals("Spellcasting"))
-        {
-            myStateController.setToIdle();
-        }
-
-        //entityPrefab.GetComponent<Transform>().
-    }
-
-
-
-    public void checkQKey()
-    {
-        if (Input.GetKey(KeyCode.Q))
-        {
-            myStateController.setToQSpell();
-
-
-        }
-    }
-
-
-    public void checkEKey()
-    {
-        if (Input.GetKey(KeyCode.E))
-        {
-            myStateController.setToESpell();
-
-
-        }
-    }
-
-    public void checkRKey()
-    {
-        if (Input.GetKey(KeyCode.R))
-        {
-            myStateController.setToRSpell();
-
-
-        }
-    }
-    //right click : change spells
-
+    //private bool isEnoughMagic() { return false; }
 
 
 

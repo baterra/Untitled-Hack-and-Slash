@@ -41,9 +41,9 @@ public class PlayerControls : MonoBehaviour {
             //checkRightClickRelease(); // spellcasting
 
         }
-        else {
-            Debug.Log("CHHUNG MUNG MAO!");//
-        }
+        //else {
+         //   Debug.Log("CHHUNG MUNG MAO!");//
+       // }
         
 
 

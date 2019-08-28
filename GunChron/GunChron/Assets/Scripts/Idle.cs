@@ -59,11 +59,11 @@ public string getName()
 
                     return new JumpIdle();
 
-                case "JumpRun":
+            case "JumpRun":
 
                     return this;
 
-                case "JumpHitstun":
+            case "JumpHitstun":
 
                     return this;
 
