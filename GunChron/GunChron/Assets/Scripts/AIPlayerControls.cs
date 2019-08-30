@@ -6,6 +6,8 @@ public class AIPlayerControls : MonoBehaviour {
 
     public GameObject entityPrefab;
     public StateController TargetState = null;
+    public float fightDistance = 0f;
+    //public 
 
     private StateController myStateController = null;
 
@@ -31,6 +33,8 @@ public class AIPlayerControls : MonoBehaviour {
             }
             else
             {
+
+
 
             }
 
@@ -73,7 +77,7 @@ public class AIPlayerControls : MonoBehaviour {
 
 
 
-            default: // Do not try to change states for States histun, attack, and crumple states
+            default: // Do not try to change states for histun, attack, and crumple states
                         // since those states can transition on their own without the need for this script
       
                 break;
@@ -81,6 +85,8 @@ public class AIPlayerControls : MonoBehaviour {
 
         }
     }
+
+ 
 
 
     private void calculateNextMove() {
@@ -94,6 +100,9 @@ public class AIPlayerControls : MonoBehaviour {
 
     private bool isFacingAI()
     {
+        bool isFace = TargetState.isRight; // direction enemy is facing
+        //bool isLeftOf = TargetState.GetComponentsInParent<Transform>().; // if AI is left of right of enemy
+
         return false;
     }
 

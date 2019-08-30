@@ -17,9 +17,9 @@ TagManager:
   - hitbox
   - platform
   - GroundChecker
-  - 
-  - 
-  - 
+  - AlertBox
+  - AlerHit
+  - AlertHurt
   - 
   - 
   - 

@@ -43,7 +43,7 @@ public class Run : State {
 
             case "Guard":
 
-                return this;
+                return new Guard();
 
             case "Hitstun":
 
