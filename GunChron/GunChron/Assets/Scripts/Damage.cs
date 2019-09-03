@@ -42,7 +42,7 @@ public static class Damage
         Holy, // 7
         Ether, // 8
         NonElement, // 9
-        Stag, // 10
-        MagicDrain // 11
+        //Stag, // 10
+        //MagicDrain // 11
     }
 }

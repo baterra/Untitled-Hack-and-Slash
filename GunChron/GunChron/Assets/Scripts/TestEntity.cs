@@ -46,9 +46,10 @@ public class TestEntity : Entity {
     {
         if (myStateController.GetStateName().Equals("Guard"))
         {
-            entityInfo.loseMagic(mag * (entityInfo.Stag / entityInfo.getMaxStag()) );
+            entityInfo.loseMagic(mag * (entityInfo.Stag / entityInfo.getMaxStag()));
         }
-        entityInfo.loseMagic(mag);
+        else { entityInfo.loseMagic(mag); }
+        
     }
 
 
@@ -79,41 +80,18 @@ public class TestEntity : Entity {
         if (myStateController.GetStateName().Equals("Guard")) // take partial damage based on stag bar/ still accounts for 
                                                                 //elemental weaknesses
         {
-            switch (info.type)
-            {
-                case Damage.DamageType.MagicDrain:
-                    entityInfo.loseMagic(value * (entityInfo.Stag / entityInfo.getMaxStag()));
-                    break;
-
-                case Damage.DamageType.Stag:
-                    entityInfo.loseStag(value * (entityInfo.Stag / entityInfo.getMaxStag()));
-                    break;
-
-                default:
+            
                     entityInfo.loseHealth(value * (entityInfo.Stag / entityInfo.getMaxStag()));
-                    break;
+                    
 
-            }
+            
         }
         else
         {
             // take damage based on new modified value
 
-            switch (info.type)
-            {
-                case Damage.DamageType.MagicDrain:
-                    entityInfo.loseMagic(value );
-                    break;
-
-                case Damage.DamageType.Stag:
-                    entityInfo.loseStag(value );
-                    break;
-
-                default:
                     entityInfo.loseHealth(value );
-                    break;
-
-            }
+                   
         }
 
     }

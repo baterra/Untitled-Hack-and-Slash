@@ -64,6 +64,7 @@
     <Compile Include="Assets\chgchgch.cs" />
     <Compile Include="Assets\ScriptableObjectExample.cs" />
     <Compile Include="Assets\Scripts\AIPlayerControls.cs" />
+    <Compile Include="Assets\Scripts\AlertAttackBox.cs" />
     <Compile Include="Assets\Scripts\AnimationBehaviors.cs" />
     <Compile Include="Assets\Scripts\Attack.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />

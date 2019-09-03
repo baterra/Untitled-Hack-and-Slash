@@ -12,6 +12,7 @@ public abstract class Entity : MonoBehaviour
     public EntityInfo entityInfo;
     public StateController myStateController;
 
+
     
 
 

@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class AIPlayerControls : MonoBehaviour {
 
-    public GameObject entityPrefab;
-    public StateController TargetState = null;
+    public GameObject entityPrefab; // this entity
+
+    public Entity TargetEntity = null;
+
+
+    public BoxCollider2D thisHurtAlertBox;
+    private LayerMask layers;
+
     public float fightDistance = 0f;
     //public 
 
-    private StateController myStateController = null;
+    private StateController myStateController = null; // this entity's state
 
 
 
@@ -17,7 +23,7 @@ public class AIPlayerControls : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        myStateController = entityPrefab.GetComponent<Entity>().myStateController;
+        myStateController = entityPrefab.GetComponent<Entity>().myStateController; // initialize this 
     }
 
     // Update is called once per frame
@@ -27,13 +33,22 @@ public class AIPlayerControls : MonoBehaviour {
         if (entityPrefab.GetComponent<Entity>() != null)
         {
 
-            if (TargetState == null) // if this AI has no target    // !!!!!!!!  EDIT THIS CONDITION TO INCLUDE DEATH STATE !!!!!!!!!!!
+            if (TargetEntity == null) // if this AI has no target    // !!!!!!!!  EDIT THIS CONDITION TO INCLUDE DEATH STATE !!!!!!!!!!!
             {
                 setIdle(); // it does nothing (IDLE STATE)
+                //set TargetState = null; if you include death state
             }
             else
             {
-
+                if ( thisHurtAlertBox.IsTouchingLayers(LayerMask.GetMask("AlerHit")) ) //thisAlertBx.incomingAttacks
+                {
+                    myStateController.setToGuard();
+                    
+                }
+                else
+                {
+                    setIdle();
+                }
 
 
             }
@@ -90,21 +105,10 @@ public class AIPlayerControls : MonoBehaviour {
 
 
     private void calculateNextMove() {
-        if (TargetState != null)
-        {
-
-
-        }
+       
     }
 
 
-    private bool isFacingAI()
-    {
-        bool isFace = TargetState.isRight; // direction enemy is facing
-        //bool isLeftOf = TargetState.GetComponentsInParent<Transform>().; // if AI is left of right of enemy
-
-        return false;
-    }
 
     private bool checkInRange()
     {
@@ -113,6 +117,21 @@ public class AIPlayerControls : MonoBehaviour {
 
     //private bool isEnoughMagic() { return false; }
 
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        Entity enemy = collision.GetComponentInParent<Entity>();
+
+        if (TargetEntity == null && enemy != null) // if this AI has no target yet and the collided object is an entity
+        {
+            TargetEntity = enemy; // set target
+        }
+
+
+
+     }
 
 
 
