@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIPlayerControls : MonoBehaviour {
 
     public GameObject entityPrefab; // this entity
+    private Entity thisEntity;
 
     public Entity TargetEntity = null;
 
@@ -24,6 +25,7 @@ public class AIPlayerControls : MonoBehaviour {
     void Start()
     {
         myStateController = entityPrefab.GetComponent<Entity>().myStateController; // initialize this 
+        thisEntity = entityPrefab.GetComponent<Entity>();
     }
 
     // Update is called once per frame
@@ -42,8 +44,9 @@ public class AIPlayerControls : MonoBehaviour {
             {
                 if ( thisHurtAlertBox.IsTouchingLayers(LayerMask.GetMask("AlerHit")) ) //thisAlertBx.incomingAttacks
                 {
-                    myStateController.setToGuard();
-                    
+                    setGuard();
+
+
                 }
                 else
                 {
@@ -64,6 +67,14 @@ public class AIPlayerControls : MonoBehaviour {
     public void setEntityPrefab(GameObject pb) //////////////////////////POSSIBLY DELETE
     {
         entityPrefab = pb;
+    }
+
+    private void setGuard()
+    {
+        if (!thisEntity.isBreak) // only block if AI is not in BREAK mode
+        {
+            myStateController.setToGuard();
+        }
     }
 
     private void setIdle()

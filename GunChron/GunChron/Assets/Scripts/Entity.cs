@@ -12,12 +12,16 @@ public abstract class Entity : MonoBehaviour
     public EntityInfo entityInfo;
     public StateController myStateController;
 
+    public int breakFrames = 0; // a counter to indicate how long character is in Break state
+    public int stagFrames = 0; // a counter to indicate the rate at which the character's stag bar goes down
+    public bool isBreak = false;
 
-    
+
+
 
 
     public abstract string getEntityName();
-    public abstract void AttackTarget(Entity target);
+
 
     public abstract void ApplyDamage(Damage.DamageEventInfo info);
     public abstract void ApplyStagDamage(float stag);

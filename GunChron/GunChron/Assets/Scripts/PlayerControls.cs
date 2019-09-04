@@ -10,12 +10,14 @@ public class PlayerControls : MonoBehaviour {
 
     private StateController myStateController =null;
     public bool mouseIsDown = false;
+    private Entity thisEntity;
 
 
 
     // Use this for initialization
     void Start () {
         myStateController = entityPrefab.GetComponent<Entity>().myStateController;
+        thisEntity = entityPrefab.GetComponent<Entity>();
     }
 	
 	// Update is called once per frame
@@ -204,7 +206,7 @@ public class PlayerControls : MonoBehaviour {
 
     public void checkKeyS()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && !thisEntity.isBreak)
         {
             myStateController.setToGuard();
             

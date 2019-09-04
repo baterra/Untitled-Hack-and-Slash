@@ -13,8 +13,8 @@ public class HitboxCollision : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     { 
-         if (collision.attachedRigidbody.GetComponent<Entity>() != null )
-              collision.attachedRigidbody.GetComponent<Entity>().AttackTarget(thisEntity); // apply damage to the collided enemy
+        // if (collision.attachedRigidbody.GetComponent<Entity>() != null )
+             // collision.attachedRigidbody.GetComponent<Entity>().AttackTarget(thisEntity); // apply damage to the collided enemy
                                                                                            // with values from thisEntity
 
         //Debug.Log("atk 2");

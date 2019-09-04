@@ -20,9 +20,46 @@ public class TestEntity : Entity {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+
+        if (entityInfo.Stag > 0 && entityInfo.Stag < entityInfo.getMaxStag())
+        {
+            if (myStateController.GetStateName() == "Guard")
+            {
+                stagFrames = 0;
+            }
+            else
+            {
+                stagFrames++;
+                if (stagFrames >= 120)
+                {
+                    stagFrames = 0;
+                    entityInfo.loseStag(entityInfo.getMaxStag() * .03333f);
+                    
+                }
+                    
+            }
+                
+        }
+
+        if (entityInfo.Stag >= entityInfo.getMaxStag())
+        {
+            isBreak = true;
+            breakFrames++;
+            if (breakFrames >= 900 )
+            {
+                entityInfo.Stag = 0;
+                breakFrames = 0;
+                stagFrames = 0;
+                isBreak = false;
+            }
+            
+        
+
+        }
+
+    }
 
 
 
@@ -37,7 +74,7 @@ public class TestEntity : Entity {
     {
         if (myStateController.GetStateName().Equals("Guard")) 
         {
-            entityInfo.loseStag(stag);
+            entityInfo.gainStag(stag);
         }  
     }
 
@@ -134,10 +171,6 @@ public class TestEntity : Entity {
 
 
 
-    override
-    public void AttackTarget(Entity target)
-    {
-      
-    }
+  
 
 }

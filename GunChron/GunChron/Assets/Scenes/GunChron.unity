@@ -171,7 +171,7 @@ Prefab:
     - target: {fileID: 114210645937159338, guid: 340c25f45b3c9984890e8767a2eef871,
         type: 2}
       propertyPath: stgDmg
-      value: -500
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340c25f45b3c9984890e8767a2eef871, type: 2}
