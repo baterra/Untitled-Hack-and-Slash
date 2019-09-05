@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class AIPlayerControls : MonoBehaviour {
@@ -13,7 +14,8 @@ public class AIPlayerControls : MonoBehaviour {
     public BoxCollider2D thisHurtAlertBox;
     private LayerMask layers;
 
-    public float fightDistance = 0f;
+    public float fightRadius = 0f;
+    public float restRadius = 0f;
     //public 
 
     private StateController myStateController = null; // this entity's state
@@ -50,7 +52,20 @@ public class AIPlayerControls : MonoBehaviour {
                 }
                 else
                 {
-                    setIdle();
+                    setIdle(); 
+
+                    Vector3 dist = thisEntity.GetComponentInParent<Transform>().position - TargetEntity.GetComponentInParent<Transform>().position;
+
+                    if (!isCloserX(dist.x))
+                    {
+                        setRun();
+                    }
+
+                    isCloserY(dist.y);
+                    
+                    
+
+
                 }
 
 
@@ -112,19 +127,127 @@ public class AIPlayerControls : MonoBehaviour {
         }
     }
 
- 
+
+    private void setRun()
+    {
+        switch (myStateController.GetStateName())
+        {
+            case "Idle":
+                myStateController.setToRun();
+                break;
+
+
+            case "JumpIdle":
+                myStateController.setToJumpRun();
+                break;
+
+            default: // Do not try to change states for histun, attack, and crumple states
+                     // since those states can transition on their own without the need for this script
+
+                break;
+
+
+        }
+    }
+
+
 
 
     private void calculateNextMove() {
        
     }
 
-
-
-    private bool checkInRange()
+    private void setJump()
     {
-        return false;
+        switch (myStateController.GetStateName())
+        {
+            case "Idle":
+                myStateController.setToJumpIdle();
+                break;
+
+
+            case "Run":
+                myStateController.setToJumpRun();
+                break;
+
+            default: // Do not try to change states for histun, attack, and crumple states
+                     // since those states can transition on their own without the need for this script
+
+                break;
+
+
+        }
     }
+
+    private bool isCloserY(float yDist)
+    {
+        if (System.Math.Abs(yDist) > fightRadius && myStateController.GetStateName() != "JumpIdle"
+           && myStateController.GetStateName() != "JumpHitstun" && myStateController.GetStateName() != "JumpRun"
+           && myStateController.GetStateName() != "JumpAttack" &&
+            myStateController.GetStateName() != "Hitstun") // if it is far and entity is on the ground
+        {
+            setJump();
+            entityPrefab.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 12);
+            return false;
+            
+        }
+
+        return true;
+    }
+
+    private bool isCloserX(float xDist)
+    {
+        if (System.Math.Abs(xDist) > fightRadius ) // if it is far
+        {
+            setRun();
+
+            Vector3 newPos = thisEntity.GetComponentInParent<Transform>().position;
+
+            if (myStateController.GetStateName() == "Run" || myStateController.GetStateName() == "JumpRun")
+            {
+                entityPrefab.GetComponent<Rigidbody2D>().velocity = new Vector2(0,
+                   entityPrefab.GetComponent<Rigidbody2D>().velocity.y);              // clear any X momentum that this entity has
+                                                                                      // REASON: Entity will toggle between Idle and run state
+                                                                                      // while running; 
+                                                                                      // This is because the momentum that an entity receives
+                                                                                      // from an attack last longer than usual, so by the time 
+                                                                                      // entity gets close to its target and stop, the momentum 
+                                                                                      // pushes them back causing them to rerun back to the target, 
+                                                                                      // creating the toggling between IDLE and RUN state bug.
+                                                                                      //CURRENT SOLUTION: clear any momentum when run state but will
+                                                                                      // revisit this script to write this code better.
+
+                if (xDist > 0) // if enity is on right of target, have him move left closer to target
+                {
+                    myStateController.isRight = false;
+                    entityPrefab.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
+                    newPos += new Vector3(entityPrefab.GetComponent<Entity>().speed * Time.deltaTime * -1, 0, 0);
+
+
+                }
+                else if (xDist < 0)  // if enity is on left of target, have him move right closer to target
+                {
+                    myStateController.isRight = true;
+                    entityPrefab.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
+                    newPos += new Vector3(entityPrefab.GetComponent<Entity>().speed * Time.deltaTime * 1, 0, 0);
+
+                }
+
+                entityPrefab.GetComponent<Transform>().position = newPos; //update position
+            }
+
+           
+            
+            return false;
+        }
+
+
+        return true;
+     }
+
+
+
+
 
     //private bool isEnoughMagic() { return false; }
 

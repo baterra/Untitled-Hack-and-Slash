@@ -674,6 +674,16 @@ Prefab:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 114749740108262952, guid: 340c25f45b3c9984890e8767a2eef871,
+        type: 2}
+      propertyPath: fightRadius
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114749740108262952, guid: 340c25f45b3c9984890e8767a2eef871,
+        type: 2}
+      propertyPath: restRadius
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 340c25f45b3c9984890e8767a2eef871, type: 2}
   m_IsPrefabAsset: 0
