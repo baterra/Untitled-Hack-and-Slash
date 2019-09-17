@@ -24,7 +24,7 @@ public class Death : State {
 
 
     override
-    public State getNextState(State requestedState, bool isParryable)
+    public State getNextState(State requestedState, bool isRecovery)
     {
 
         switch (requestedState.getName())

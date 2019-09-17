@@ -24,7 +24,7 @@ public class Crumple : State
 
 
     override
-    public State getNextState(State requestedState, bool isParryable)
+    public State getNextState(State requestedState, bool isRecovery)
     {
 
         switch (requestedState.getName())
@@ -47,10 +47,9 @@ public class Crumple : State
                 return this;
 
             case "Attack":
-
-                
-
-                return this;
+                if (isRecovery) { return new CrumpleAttack(); }
+                return new Crumple();
+               
 
             case "JumpIdle":
 

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class OnGroundCheck : MonoBehaviour {
     public bool onGround = true;
+    public BoxCollider2D groundbx;
     
     public StateController myStateController;
-	// Use this for initialization
-	void Start () {
-		
-	}
+
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (!onGround)
+        string name = myStateController.GetStateName();
+
+        if (!groundbx.IsTouchingLayers(LayerMask.GetMask("platform")))
         {
-            switch (myStateController.GetStateName())
+            switch (name)
             {
 
                 case "Idle":
@@ -38,45 +38,50 @@ public class OnGroundCheck : MonoBehaviour {
 
             }
         }
+
+        else
+        {
+            switch (name)
+            {
+
+
+
+                case "JumpIdle":
+                    myStateController.setToIdle();
+
+                    break;
+
+                case "JumpRun":
+                    myStateController.setToRun();
+
+                    break;
+
+                case "JumpHitstun":
+                    myStateController.setToHitstun();
+
+                    break;
+
+
+                default:
+                    break;
+
+
+            }
+        }
 		
 	}
 
   
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        switch (myStateController.GetStateName())
-        {
+    //private void OnTriggerStay2D(Collider2D collision)
+   // {
+        
+    //    onGround = true;
+    //}
 
-
-
-            case "JumpIdle":
-                myStateController.setToIdle();
-
-                break;
-
-            case "JumpRun":
-                myStateController.setToRun();
-
-                break;
-
-            case "JumpHitstun":
-                myStateController.setToHitstun();
-
-                break;
-
-
-            default:
-                break;
-
-
-        }
-        onGround = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        onGround = false;
-    }
+   // private void OnTriggerExit2D(Collider2D collision)
+   // {
+    //    onGround = false;
+    //}
 
   
 

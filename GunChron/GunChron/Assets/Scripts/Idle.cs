@@ -25,7 +25,7 @@ public string getName()
 
 
     override
-    public State getNextState(State requestedState, bool isParryable)
+    public State getNextState(State requestedState, bool isRecovery)
     {
         
             switch (requestedState.getName())
@@ -82,6 +82,9 @@ public string getName()
             case "Death":
 
                 return new Death();
+
+            case "Crumple":
+                return new Crumple();
 
 
             default:

@@ -21,7 +21,7 @@ public class PlayerControls : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
         if (entityPrefab.GetComponent<Entity>() != null)
         {
@@ -40,7 +40,10 @@ public class PlayerControls : MonoBehaviour {
             checkKeyARelease();
             checkKeySRelease();/////
             checkLeftClickRelease();
-            //checkRightClickRelease(); // spellcasting
+
+            checkOnGround();
+
+            //myStateController.playCurrState();
 
         }
         //else {
@@ -61,10 +64,8 @@ public class PlayerControls : MonoBehaviour {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
 
-            switch (myStateController.GetStateName())
+            switch (myStateController.GetStateName()) // change to run state depending on whether player is on ground or air
             {
-
-                
 
                 case "Idle":
                     myStateController.setToRun();
@@ -74,9 +75,6 @@ public class PlayerControls : MonoBehaviour {
                     myStateController.setToJumpRun();
                     break;
 
-
-
-
                 default:
                     break;
 
@@ -85,14 +83,14 @@ public class PlayerControls : MonoBehaviour {
             //entityPrefab.GetComponent<StateController>().setToRun();
            
 
-            if (myStateController.state.getName().Equals("Run") 
+            if (myStateController.state.getName().Equals("Run") // if  player successfully changes to run state, move the character
                 || myStateController.state.getName().Equals("JumpRun"))
             {
                 applyRun( n);
 
             }
-            else if (myStateController.state.getName().Equals("Guard")) {
-                applyRunWhenGuard( n);
+            else if (myStateController.state.getName().Equals("Guard")) { // if player is actually blocking, change their facing direction
+                changeGuardDirection( n);
             }
 
         }
@@ -105,18 +103,18 @@ public class PlayerControls : MonoBehaviour {
     private void applyRun(float n)
     {
 
-        if (n < 0)
+        if (n < 0) // character faces to the left if running to the left
         {
             myStateController.isRight = false;
             entityPrefab.GetComponent<Transform>().localScale = new Vector3(-1f, 1f, 1f);
         }
-        else if (n > 0)
+        else if (n > 0) // character faces to the right if running to the right
         {
             myStateController.isRight = true;
             entityPrefab.GetComponent<Transform>().localScale = new Vector3(1f, 1f, 1f);
         }
 
-        Vector3 newPos = entityPrefab.GetComponent<Transform>().position;
+        Vector3 newPos = entityPrefab.GetComponent<Transform>().position; // move the character one step up
         newPos += new Vector3(entityPrefab.GetComponent<Entity>().speed * Time.deltaTime
             * n, 0, 0);///
         entityPrefab.GetComponent<Transform>().position = newPos;
@@ -126,7 +124,7 @@ public class PlayerControls : MonoBehaviour {
 
 
 
-    private void applyRunWhenGuard(float n)
+    private void changeGuardDirection(float n)
     {
 
         if (n < 0)
@@ -153,9 +151,6 @@ public class PlayerControls : MonoBehaviour {
         {
             switch (myStateController.GetStateName())
             {
-
-
-
                 case "Run":
                     myStateController.setToIdle();
                     break;
@@ -164,10 +159,8 @@ public class PlayerControls : MonoBehaviour {
                     myStateController.setToJumpIdle();
                     break;
 
-
                 default:
                     break;
-
 
             }
           
@@ -226,18 +219,90 @@ public class PlayerControls : MonoBehaviour {
 
     public void checkKeyW()
     {
-        if (Input.GetKey(KeyCode.W) 
-           
-            && (myStateController.state.getName().Equals("Run") ||
-                myStateController.state.getName().Equals("Idle") 
-                || myStateController.state.getName().Equals("Hitstun")) 
-                )
+        // !groundbx.IsTouchingLayers(LayerMask.GetMask("platform"))
+        //!thisEntity.groundbx.IsTouchingLayers(LayerMask.GetMask("platform"))
+
+        if (Input.GetKey(KeyCode.W) && thisEntity.groundbx.IsTouchingLayers(LayerMask.GetMask("platform"))
+                && (myStateController.state.getName().Equals("Run") ||
+                myStateController.state.getName().Equals("Idle") ) )
         {
-            myStateController.atkPhase = "S";
-          entityPrefab.GetComponent<Rigidbody2D>().velocity = new Vector2(0,12); 
+            if (myStateController.state.getName().Equals("Run"))
+            {
+                myStateController.setToJumpRun();
+          
+                entityPrefab.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 12);
+            }
+            else if (myStateController.state.getName().Equals("Idle"))
+            {
+                myStateController.setToJumpIdle();
+                Debug.Log("Set to Jump State");
+                entityPrefab.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 12);
+            }
+
+            
            // entityPrefab.GetComponent<StateController>().isGround = false;
 
 
+        }
+
+
+
+    }
+
+
+    private void checkOnGround()
+    {
+        if (thisEntity.groundbx.IsTouchingLayers(LayerMask.GetMask("platform")))
+        {
+            switch (myStateController.GetStateName())
+            {
+
+                case "JumpIdle":
+                    myStateController.setToIdle();
+
+                    break;
+
+                case "JumpRun":
+                    myStateController.setToRun();
+
+                    break;
+
+                case "JumpHitstun":
+                    myStateController.setToCrumple();
+
+                    break;
+
+
+                default:
+                    break;
+
+
+            }
+        }
+        
+        else {
+            
+            switch (myStateController.GetStateName())
+            {
+                
+                case "Idle":
+                    myStateController.setToJumpIdle();
+                    break;
+
+                case "Run":
+                    myStateController.setToJumpRun();
+                    break;
+
+                case "Hitstun":
+                    myStateController.setToJumpHitstun();
+                    break;
+
+
+                default:
+                    break;
+
+
+            }
         }
     }
 
@@ -247,6 +312,7 @@ public class PlayerControls : MonoBehaviour {
         if (Input.GetKey(KeyCode.Mouse0) && !mouseIsDown)
         {
             myStateController.setToAttack();
+            Debug.Log("Set to attack state");
             mouseIsDown = true;
 
         }
@@ -264,10 +330,9 @@ public class PlayerControls : MonoBehaviour {
     }
 
 
-    /// <summary>
+ 
     /// DONT FORGET TO PUT THESE FUNCTIONS INTO UPDATE() FUNCTION
-    /// </summary>
-    /// 
+
 
 
     public void checkRightClick()

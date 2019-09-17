@@ -34,7 +34,7 @@ public class Attack : State
 
 
     override
-         public State getNextState(State requestedState, bool isParryable)
+         public State getNextState(State requestedState, bool isRecovery)
     {
 
         switch (requestedState.getName())
@@ -59,7 +59,7 @@ public class Attack : State
             case "Attack":
 
                 //return new Attack();//////////
-                if ( isParryable) { return new Attack(atkNum + 1); }
+                if (isRecovery) { return new Attack(atkNum + 1); }
              return this;
 
             case "JumpIdle":
@@ -78,8 +78,12 @@ public class Attack : State
 
                 return new Death();
 
+            case "Crumple":
+                
+                return new Crumple();
+
             default:
-                return  this;
+                return this;
 
 
         }

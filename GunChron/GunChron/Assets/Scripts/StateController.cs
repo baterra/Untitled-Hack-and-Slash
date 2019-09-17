@@ -14,8 +14,12 @@ public class StateController : MonoBehaviour {
 
   
 
-    public bool isParryable = false;
+    public bool isRecovery = false;
     public bool isRight = true;
+
+    public bool setIdle = false;
+    public bool setJumpIdle = false;
+
     public string atkPhase = "";
 
     public int maxCombo = 2;
@@ -41,13 +45,15 @@ public class StateController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (atkPhase.Equals("I"))
-        {
-            setToIdle();
+       // if (atkPhase.Equals("I"))
+       // {
+        //    setToIdle();
+         //   playCurrState();
+           // atkPhase = "";
+        //}
+       // else {
             playCurrState();
-            atkPhase = "";
-        }
-        else { playCurrState(); }
+       // }
        
 
         stateNameShow = state.getFileName();//
@@ -56,14 +62,35 @@ public class StateController : MonoBehaviour {
         
     }
 
-    public void playCurrState()
+
+    public void playCurrState2()
     { ///myAnimator.Play("Idle");
+
+        stateAnimator.Play(GetStateClipName()); // play this state
+
+    }
+
         
 
 
+    public void playCurrState()
+    { ///myAnimator.Play("Idle");
+
+        if (setIdle) 
+        {
+            setToIdle();
+           
+        }
+
+        if (setJumpIdle) 
+        {
+            setToJumpIdle();
+
+        }
+
         if (!stateAnimator.GetCurrentAnimatorStateInfo(0).IsName(GetStateClipName()))
-                                                                                                    // check whether the state going to be played
-                                                                                                   // is already playing
+                                                                                    // check whether the state going to be played
+                                                                                    // is already playing
         {
             stateAnimator.Play(GetStateClipName()); // play this state
            
@@ -86,7 +113,7 @@ public class StateController : MonoBehaviour {
 
     public void SetBattleState(State requestedState)
     {
-        state = state.getNextState(requestedState, isParryable);
+        state = state.getNextState(requestedState, isRecovery);
     }
 
     public void ChangeState(State nextState)
@@ -102,7 +129,7 @@ public class StateController : MonoBehaviour {
 
     public void setToIdle()
     {
-        ChangeState(state.getNextState(new Idle(), isParryable));
+        ChangeState(state.getNextState(new Idle(), isRecovery));
 
         //state = state.getNextState(new Idle(), isParryable);
     }
@@ -110,26 +137,27 @@ public class StateController : MonoBehaviour {
     public void setToAttack()
     {
         if (state.atkNum < maxCombo) {
-            state = state.getNextState(new Attack(), isParryable);
+            state = state.getNextState(new Attack(), isRecovery);
         }
         
     }
 
     public void setToGuard()
     {
-        state = state.getNextState(new Guard(), isParryable);
+        state = state.getNextState(new Guard(), isRecovery);
     }
 
     public void setToRun()
     {
-        state = state.getNextState(new Run(), isParryable);
+        state = state.getNextState(new Run(), isRecovery);
     }
 
     public void setToHitstun()
     {
-        state = state.getNextState(new Hitstun(), isParryable);
+        state = state.getNextState(new Hitstun(), isRecovery);
         if (state.getName().Equals("Hitstun")) {
-            stateAnimator.Play(GetStateClipName(), 0, 0); // play this state
+            stateAnimator.Play(GetStateClipName(), 0, 0); // replay this state animation when this function is called
+                                                          // for when player hits an enemy multiple times
            
         }
             
@@ -138,51 +166,65 @@ public class StateController : MonoBehaviour {
     public void setToJumpHitstun()
     {
        
-        state = state.getNextState(new JumpHitstun(), isParryable);
+        state = state.getNextState(new JumpHitstun(), isRecovery);
       
      }
 
+    public void setToCrumple()
+    {
+
+        state = state.getNextState(new Crumple(), isRecovery);
+
+    }
+
+    public void setToCrumpleAttack()
+    {
+
+        state = state.getNextState(new CrumpleAttack(), isRecovery);
+
+    }
+
     public void setToJumpIdle()
     {
-        state = state.getNextState(new JumpIdle(), isParryable);
+        state = state.getNextState(new JumpIdle(), isRecovery);
     }
 
     public void setToJumpRun()
     {
-        state = state.getNextState(new JumpRun(), isParryable);
+        state = state.getNextState(new JumpRun(), isRecovery);
     }
 
     public void setToSpellcasting()
     {
 
-        state = state.getNextState(new Spellcasting(), isParryable);
+        state = state.getNextState(new Spellcasting(), isRecovery);
 
     }
 
     public void setToQSpell()
     {
 
-        state = state.getNextState(new QSpell(), isParryable);
+        state = state.getNextState(new QSpell(), isRecovery);
 
     }
 
     public void setToESpell()
     {
 
-        state = state.getNextState(new ESpell(), isParryable);
+        state = state.getNextState(new ESpell(), isRecovery);
 
     }
 
     public void setToRSpell()
     {
 
-        state = state.getNextState(new RSpell(), isParryable);
+        state = state.getNextState(new RSpell(), isRecovery);
 
     }
 
-    public void setIsParryable(bool state)
+    public void setRecoveryState(bool state)
     {
-        isParryable = state;
+        isRecovery = state;
     }
 
     public void SetFacingState(bool state)

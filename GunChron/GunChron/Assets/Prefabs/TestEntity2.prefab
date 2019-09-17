@@ -338,6 +338,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1839029826841630
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4049898591097086}
+  - component: {fileID: 114351814069125026}
+  - component: {fileID: 61926196272914762}
+  m_Layer: 0
+  m_Name: CrumpleAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1881338955899200
 GameObject:
   m_ObjectHideFlags: 1
@@ -495,6 +512,19 @@ Transform:
   - {fileID: 4714768639858986}
   m_Father: {fileID: 4934359829006808}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4049898591097086
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839029826841630}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4997733504077064}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4073939252385502
 Transform:
@@ -828,6 +858,7 @@ Transform:
   - {fileID: 4125538522094444}
   - {fileID: 4145922049306042}
   - {fileID: 4488821983648608}
+  - {fileID: 4049898591097086}
   m_Father: {fileID: 4432335054256062}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1126,6 +1157,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!61 &61926196272914762
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839029826841630}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.5, y: 0.3}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4, y: 2.3}
+  m_EdgeRadius: 0
 --- !u!95 &95322549096708442
 Animator:
   serializedVersion: 3
@@ -1150,12 +1206,13 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1034443679914346}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfbea439b39e49847b0d43b30839d549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   onGround: 1
+  groundbx: {fileID: 61776771237899526}
   myStateController: {fileID: 114213626887595242}
 --- !u!114 &114027640390902668
 MonoBehaviour:
@@ -1197,8 +1254,9 @@ MonoBehaviour:
   xKnock: 6
   yKnock: 0
   magDrain: 0
-  stgDmg: 50
-  isHitstun: 1
+  stgDmg: 500
+  isHitstun: 0
+  isCrumple: 1
   damages: 640000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114213626887595242
 MonoBehaviour:
@@ -1215,8 +1273,10 @@ MonoBehaviour:
   currAtkNum: 0
   entireFileName: 
   entireFileNameHit: 
-  isParryable: 0
+  isRecovery: 0
   isRight: 1
+  setIdle: 0
+  setJumpIdle: 0
   atkPhase: R
   maxCombo: 2
   stateAnimator: {fileID: 95322549096708442}
@@ -1236,6 +1296,10 @@ MonoBehaviour:
   jump: 100
   entityInfo: {fileID: 114320090569102894}
   myStateController: {fileID: 114213626887595242}
+  breakFrames: 0
+  stagFrames: 0
+  isBreak: 0
+  groundbx: {fileID: 61776771237899526}
 --- !u!114 &114320090569102894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1251,6 +1315,25 @@ MonoBehaviour:
   magic: 750
   Stag: 100
   Health: 2000
+--- !u!114 &114351814069125026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1839029826841630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c32ef54e34f3c874c97ec307ec937a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisEntity: {fileID: 114217071004111754}
+  xKnock: 3
+  yKnock: 0
+  magDrain: 50
+  stgDmg: 80
+  isHitstun: 0
+  isCrumple: 1
+  damages: 320000000000000000000000000000000000000000000000000000003200000000000000
 --- !u!114 &114460652602710124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1267,7 +1350,8 @@ MonoBehaviour:
   yKnock: 2
   magDrain: 0
   stgDmg: 50
-  isHitstun: 1
+  isHitstun: 0
+  isCrumple: 1
   damages: 320000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114483388627411334
 MonoBehaviour:
@@ -1299,6 +1383,7 @@ MonoBehaviour:
   magDrain: 50
   stgDmg: 80
   isHitstun: 1
+  isCrumple: 0
   damages: 320000000000000000000000000000000000000000000000000000003200000000000000
 --- !u!114 &114688017667975640
 MonoBehaviour:
@@ -1330,6 +1415,7 @@ MonoBehaviour:
   magDrain: 50
   stgDmg: 0
   isHitstun: 1
+  isCrumple: 0
   damages: 320000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114729891627346948
 MonoBehaviour:
@@ -1358,7 +1444,8 @@ MonoBehaviour:
   entityPrefab: {fileID: 1194154079169320}
   TargetEntity: {fileID: 0}
   thisHurtAlertBox: {fileID: 61103588163269714}
-  fightDistance: 0
+  fightRadius: 4
+  restRadius: 0
 --- !u!114 &114804070604753210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1388,6 +1475,7 @@ MonoBehaviour:
   magDrain: 0
   stgDmg: 0
   isHitstun: 1
+  isCrumple: 0
   damages: 460000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!212 &212044088326672978
 SpriteRenderer:

@@ -16,7 +16,7 @@ public abstract class State // : ScriptableObject
     public abstract string getName();
     public abstract string getFileName();
 
-    public abstract State getNextState(State requestedState, bool isParryable);
+    public abstract State getNextState(State requestedState, bool isRecovery);
 
     public void setAtkPhase(string phase)
     {

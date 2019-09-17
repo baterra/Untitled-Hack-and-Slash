@@ -23,7 +23,7 @@ public class RunAttack : State
 
 
     override
-    public State getNextState(State requestedState, bool isParryable)
+    public State getNextState(State requestedState, bool isRecovery)
     {
 
         switch (requestedState.getName())
@@ -66,6 +66,9 @@ public class RunAttack : State
             case "Death":
 
                 return new Death();
+
+            case "Crumple":
+                return new Crumple();
 
             default:
                 return this;

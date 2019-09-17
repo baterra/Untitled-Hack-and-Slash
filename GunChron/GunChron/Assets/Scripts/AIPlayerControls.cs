@@ -44,38 +44,47 @@ public class AIPlayerControls : MonoBehaviour {
             }
             else
             {
-                if ( thisHurtAlertBox.IsTouchingLayers(LayerMask.GetMask("AlerHit")) ) //thisAlertBx.incomingAttacks
+                if (thisHurtAlertBox.IsTouchingLayers(LayerMask.GetMask("AlerHit"))) //thisAlertBx.incomingAttacks
                 {
+                    setIdle();
                     setGuard();
 
 
                 }
                 else
                 {
-                    setIdle(); 
+                    setIdle();
 
                     Vector3 dist = thisEntity.GetComponentInParent<Transform>().position - TargetEntity.GetComponentInParent<Transform>().position;
 
-                    if (!isCloserX(dist.x))
+                    if (!isAttacking(dist.x, dist.y))
                     {
-                        setRun();
+
+                        if (!isCloserX(dist.x))
+                        {
+                            setRun();
+                        }
+
+                        isCloserY(dist.y);
+
                     }
 
-                    isCloserY(dist.y);
-                    
                     
 
-
+                    
+                    
+     
                 }
 
 
             }
 
         }
-      
 
 
+        checkOnGround();
 
+      // myStateController.playCurrState();
 
     }
 
@@ -148,6 +157,17 @@ public class AIPlayerControls : MonoBehaviour {
 
 
         }
+    }
+
+    private bool isAttacking(float xDist, float yDist)
+    {
+        if (System.Math.Abs(yDist) < fightRadius && System.Math.Abs(xDist) < fightRadius)
+        {
+            //myStateController.setToAttack();
+            myStateController.setToQSpell();
+            return true;
+        }
+        return false;
     }
 
 
@@ -267,6 +287,64 @@ public class AIPlayerControls : MonoBehaviour {
 
      }
 
+
+
+    private void checkOnGround()
+    {
+        if (thisEntity.groundbx.IsTouchingLayers(LayerMask.GetMask("platform")))
+        {
+            switch (myStateController.GetStateName())
+            {
+
+                case "JumpIdle":
+                    myStateController.setToIdle();
+
+                    break;
+
+                case "JumpRun":
+                    myStateController.setToRun();
+
+                    break;
+
+                case "JumpHitstun":
+                    myStateController.setToCrumple();
+
+                    break;
+
+
+                default:
+                    break;
+
+
+            }
+        }
+
+        else
+        {
+
+            switch (myStateController.GetStateName())
+            {
+
+                case "Idle":
+                    myStateController.setToJumpIdle();
+                    break;
+
+                case "Run":
+                    myStateController.setToJumpRun();
+                    break;
+
+                case "Hitstun":
+                    myStateController.setToJumpHitstun();
+                    break;
+
+
+                default:
+                    break;
+
+
+            }
+        }
+    }
 
 
 }

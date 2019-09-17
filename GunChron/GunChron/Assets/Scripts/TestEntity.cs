@@ -167,10 +167,23 @@ public class TestEntity : Entity {
 
 
     }
+    override
+    public  void applyCrumple()
+    {
+
+        if (myStateController.state.getName().Equals("JumpIdle") ||
+            myStateController.state.getName().Equals("JumpHitstun") ||
+            myStateController.state.getName().Equals("JumpAttack"))
+            myStateController.setToJumpHitstun();
+
+        else
+            myStateController.setToCrumple();
+
+    }
 
 
 
 
-  
+
 
 }

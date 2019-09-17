@@ -27,7 +27,7 @@ public class JumpRun : State
 
 
     override
-     public State getNextState(State requestedState, bool isParryable)
+     public State getNextState(State requestedState, bool isRecovery)
     {
 
         switch (requestedState.getName())
@@ -68,6 +68,9 @@ public class JumpRun : State
             case "Death":
 
                 return new Death();
+
+            case "Crumple":
+                return new JumpHitstun();
 
 
             default:

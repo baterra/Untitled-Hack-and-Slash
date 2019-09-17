@@ -24,7 +24,7 @@ public class Hitstun : State {
 
 
     override
-       public State getNextState(State requestedState, bool isParryable)
+       public State getNextState(State requestedState, bool isRecovery)
     {
 
         switch (requestedState.getName())
@@ -66,9 +66,12 @@ public class Hitstun : State {
 
                 return new Death();
 
+            case "Crumple":
+                return new Crumple();
+
 
             default:
-                return new JumpHitstun();
+                return new Hitstun();
 
 
         }
