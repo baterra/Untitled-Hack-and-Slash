@@ -52,7 +52,9 @@ public class StateController : MonoBehaviour {
            // atkPhase = "";
         //}
        // else {
-            playCurrState();
+
+          //  playCurrState();
+
        // }
        
 

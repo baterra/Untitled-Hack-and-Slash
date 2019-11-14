@@ -25,37 +25,41 @@ public class PlayerControls : MonoBehaviour {
 
         if (entityPrefab.GetComponent<Entity>() != null)
         {
-           
-            checkADKey(Input.GetAxis("Horizontal")); // check if player is running
 
-            checkKeyS(); // check if player is guarding 
-            checkKeyW(); // check if player is jumping
-            checkLeftClick();
-            //checkRightClick(); // spellcasting
-            checkQKey();
-            checkRKey();
-            checkEKey();
+            StartCoroutine("updateCharacter");
 
-            checkKeyDRelease(); // check if the keys are released
-            checkKeyARelease();
-            checkKeySRelease();/////
-            checkLeftClickRelease();
-
-            checkOnGround();
-
-            //myStateController.playCurrState();
+            myStateController.playCurrState();
 
         }
-        //else {
-         //   Debug.Log("CHHUNG MUNG MAO!");//
-       // }
-        
+       
 
 
 
     }
 
+    IEnumerator updateCharacter()
+    {
+        checkLeftClick(); // attack
+        checkADKey(Input.GetAxis("Horizontal")); // check if player is running
 
+        checkKeyS(); // check if player is guarding 
+        checkKeyW(); // check if player is jumping
+       
+        //checkRightClick(); // spellcasting
+        checkQKey();
+        checkRKey();
+        checkEKey();
+
+        checkKeyDRelease(); // check if the keys are released
+        checkKeyARelease();
+        checkKeySRelease();/////
+        checkLeftClickRelease();
+
+        checkOnGround();
+
+        yield return null;
+        
+    }
 
     public void checkADKey(float n)
     {
