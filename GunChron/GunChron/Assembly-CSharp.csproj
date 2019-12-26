@@ -935,6 +935,7 @@
     <Compile Include="Assets\Scripts\DamageEventSubscriber.cs" />
     <Compile Include="Assets\Scripts\Death.cs" />
     <Compile Include="Assets\Scripts\Entity.cs" />
+    <Compile Include="Assets\Scripts\EntityEventManager.cs" />
     <Compile Include="Assets\Scripts\EntityInfo.cs" />
     <Compile Include="Assets\Scripts\ESpell.cs" />
     <Compile Include="Assets\Scripts\FrameTimingControl.cs" />
@@ -948,6 +949,7 @@
     <Compile Include="Assets\Scripts\JumpIdle.cs" />
     <Compile Include="Assets\Scripts\JumpRun.cs" />
     <Compile Include="Assets\Scripts\MagicBar.cs" />
+    <Compile Include="Assets\Scripts\MoveScript.cs" />
     <Compile Include="Assets\Scripts\OnGroundCheck.cs" />
     <Compile Include="Assets\Scripts\Parry.cs" />
     <Compile Include="Assets\Scripts\PlayerControls.cs" />
@@ -958,6 +960,7 @@
     <Compile Include="Assets\Scripts\Spellcasting.cs" />
     <Compile Include="Assets\Scripts\StaggerBar.cs" />
     <Compile Include="Assets\Scripts\State.cs" />
+    <Compile Include="Assets\Scripts\StateAnimPlayer.cs" />
     <Compile Include="Assets\Scripts\StateController.cs" />
     <Compile Include="Assets\Scripts\StateMachineParameterControl.cs" />
     <Compile Include="Assets\Scripts\SwitchPrefabs.cs" />

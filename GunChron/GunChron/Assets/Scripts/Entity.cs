@@ -12,8 +12,8 @@ public abstract class Entity : MonoBehaviour
     public EntityInfo entityInfo;
     public StateController myStateController;
 
-    public int breakFrames = 0; // a counter to indicate how long character is in Break state
-    public int stagFrames = 0; // a counter to indicate the rate at which the character's stag bar goes down
+    public int breakFrames = 0; // a counter to indicate how long character is in Break state // SET PRIVATE
+    public int stagFrames = 0; // a counter to indicate the rate at which the character's stag bar goes down // SET PRIVATE
     public bool isBreak = false;
     public BoxCollider2D groundbx; /// box used to check if entity is touching the ground
 

@@ -316,7 +316,7 @@ public class PlayerControls : MonoBehaviour {
         if (Input.GetKey(KeyCode.Mouse0) && !mouseIsDown)
         {
             myStateController.setToAttack();
-            Debug.Log("Set to attack state");
+            
             mouseIsDown = true;
 
         }
