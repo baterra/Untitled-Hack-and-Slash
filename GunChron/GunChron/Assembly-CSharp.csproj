@@ -365,6 +365,7 @@
     <Compile Include="Assets\PlayMaker\Actions\GUILayout\GUILayoutVerticalSlider.cs" />
     <Compile Include="Assets\PlayMaker\Actions\GUILayout\UseGUILayout.cs" />
     <Compile Include="Assets\PlayMaker\Actions\Input\AnyKey.cs" />
+    <Compile Include="Assets\PlayMaker\Actions\Input\GCBreakState.cs" />
     <Compile Include="Assets\PlayMaker\Actions\Input\GetAxis.cs" />
     <Compile Include="Assets\PlayMaker\Actions\Input\GetAxisVector.cs" />
     <Compile Include="Assets\PlayMaker\Actions\Input\GetButton.cs" />

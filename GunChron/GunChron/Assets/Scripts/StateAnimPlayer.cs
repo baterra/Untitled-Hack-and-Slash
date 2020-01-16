@@ -28,9 +28,9 @@ public class StateAnimPlayer : MonoBehaviour
             stateAnimator.Play(entityStateMachine.ActiveStateName); // play this state
 
             
-                    
+
         }
-        
+        //checkJump();
         checkRun(Input.GetAxis("Horizontal")); // check if player is running
     }
 
@@ -39,7 +39,8 @@ public class StateAnimPlayer : MonoBehaviour
     {
         
 
-        if (entityStateMachine.ActiveStateName == "RunRight" || entityStateMachine.ActiveStateName == "RunLeft")
+        if (entityStateMachine.ActiveStateName == "RunRight" || entityStateMachine.ActiveStateName == "RunLeft"
+            || entityStateMachine.ActiveStateName == "Jump" )
         {
             if (n < 0) // character faces to the left if running to the left
             {
@@ -60,6 +61,17 @@ public class StateAnimPlayer : MonoBehaviour
         }
  
 
+    }
+
+    public void checkJump()
+    {
+        if (Input.GetKey(KeyCode.W) && (entityStateMachine.ActiveStateName == "Idle" || 
+            entityStateMachine.ActiveStateName == "RunLeft" || entityStateMachine.ActiveStateName == "RunRight")
+            )
+        {
+             
+            entityPrefab.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 12);
+        }
     }
 
 
